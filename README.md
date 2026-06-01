@@ -10,7 +10,6 @@ It provides a clean foundation for building a Digikala-like experience: product 
 
 | ![Description 1](https://i.postimg.cc/43P10RXc/image-2026-05-24-04-11-27.png) | ![Description 2](https://i.postimg.cc/YSzXwmz7/image-2026-05-24-04-10-26.png) | ![Description 3](https://i.postimg.cc/YSzXwmz7/image-2026-05-24-04-10-26.png) | ![Description 4](https://i.postimg.cc/MKJdXD3W/image-2026-05-24-04-13-54.png) | ![Description 5](https://i.postimg.cc/SKPG47z4/image-2026-05-24-04-15-53.png) |
 
-|
 ---
 
 ## What this project does
