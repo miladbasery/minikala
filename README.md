@@ -6,7 +6,7 @@ It provides a clean foundation for building a Digikala-like experience: product 
 
 | عکس ۱ | عکس ۲ | عکس ۳ |
 | :---: | :---: | :---: |
-| ![توضیح ۱](path/to/image1.png) | ![توضیح ۲](path/to/image2.png) | ![توضیح ۳](path/to/image3.png) |
+| ![توضیح ۱](path/to/image1.png) | ![توضیح ۲](https://postimg.cc/QBVgQCzY) | ![توضیح ۳](path/to/image3.png) |
 | **نام محصول ۱** | **نام محصول ۲** | **نام محصول ۳** |
 ---
 
