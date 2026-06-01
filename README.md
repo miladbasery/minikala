@@ -4,10 +4,13 @@
 MiniKala is an open-source, Persian (fa-IR), RTL-first multi-vendor marketplace built with Django.  
 It provides a clean foundation for building a Digikala-like experience: product catalog, categories, stores (vendors), cart, checkout, orders/invoices, comments, user profiles, and seller management.
 
-| عکس ۱ | عکس ۲ | عکس ۳ |
-| :---: | :---: | :---: |
-| ![توضیح ۱](https://i.postimg.cc/43P10RXc/image-2026-05-24-04-11-27.png) | ![توضیح ۲](https://i.postimg.cc/YSzXwmz7/image-2026-05-24-04-10-26.png) | ![توضیح ۳](path/to/image3.png) |
-| **نام محصول ۱** | **نام محصول ۲** | **نام محصول ۳** |
+| Image 1 | Image 2 | Image 3 | Image 4 | Image 5 |
+
+| :---: | :---: | :---: | :---: | :---: |
+
+| ![Description 1](https://i.postimg.cc/43P10RXc/image-2026-05-24-04-11-27.png) | ![Description 2](https://i.postimg.cc/YSzXwmz7/image-2026-05-24-04-10-26.png) | ![Description 3](https://i.postimg.cc/YSzXwmz7/image-2026-05-24-04-10-26.png) | ![Description 4](https://i.postimg.cc/MKJdXD3W/image-2026-05-24-04-13-54.png) | ![Description 5](https://i.postimg.cc/SKPG47z4/image-2026-05-24-04-15-53.png) |
+
+|
 ---
 
 ## What this project does
