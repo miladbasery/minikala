@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="glass-panel center-card">
+    <div style="font-size: 4rem; margin-bottom: 20px;">⚠️</div>
+    <h2 style="color: var(--danger); margin-bottom: 15px;">حذف حساب کاربری</h2>
+    <p style="color: #bbb; line-height: 1.6; margin-bottom: 30px;">
+        آیا از حذف دائمی حساب کاربری خود اطمینان دارید؟<br>
+        با این کار تمامی اطلاعات، سفارشات و کیف پول شما برای همیشه پاک خواهد شد و این عمل غیرقابل بازگشت است.
+    </p>
+    
+    <form method="post" style="display: flex; gap: 15px; justify-content: center;">
+        {% csrf_token %}
+        <button type="submit" class="btn-glass btn-danger" style="padding: 10px 25px; font-weight: bold;">بله، حسابم را حذف کن</button>
+        <a href="{% url 'accounts:profile' %}" class="btn-glass" style="padding: 10px 25px;">انصراف</a>
+    </form>
+</div>
+{% endblock %}

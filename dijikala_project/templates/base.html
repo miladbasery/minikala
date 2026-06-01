@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مینی‌کالا</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script>
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+        function toPersianNum(num, dontTrim) {
+            var i = 0, dontTrim = dontTrim || false, num = dontTrim ? num.toString() : num.toString().trim(), len = num.length, res = '', pos, persianNumbers = typeof persianNumber == 'undefined' ? ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'] : persianNumbers;
+            for (; i < len; i++) if ((pos = persianNumbers[num.charAt(i)])) res += pos; else res += num.charAt(i);
+            return res;
+        }
+        function formatPriceCommas(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    </script>
+</head>
+<body>
+<div class="desktop-wrapper">
+
+    <header class="header-main glass-panel">
+        <div class="header-right">
+            <a href="{% url 'stores:home' %}" class="header-logo">
+                <img src="{% static 'logos/logo.png' %}" alt="Logo" onerror="this.style.display='none'">
+                مینی‌کالا
+            </a>
+        </div>
+        
+        <div class="header-left">
+            <div class="search-bar">
+                <form action="{% url 'stores:search_page' %}" method="get">
+                    <input type="text" name="q" class="liveSearchInput" placeholder="جستجو حرفه‌ای..." autocomplete="off">
+                </form>
+                <div class="search-results searchResDiv"></div>
+            </div>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'accounts:profile' %}" class="btn-glass" title="پروفایل من">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="btn-glass auth-mobile-btn">
+                    <svg class="icon" viewBox="0 0 24 24" style="margin-left: 5px;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    <span>ورود / ثبت‌نام</span>
+                </a>
+            {% endif %}
+            
+            <a href="{% url 'stores:cart_view' %}" class="btn-glass" style="position: relative;" title="سبد خرید">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                {% if user.is_authenticated %}
+                <span class="cart-badge" id="headerCartBadge">{{ cart_total_items|default:0 }}</span>
+                {% endif %}
+            </a>
+            <button class="btn-glass" onclick="toggleTheme()" title="تغییر تم">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+            </button>
+        </div>
+        
+        <button class="hamburger-btn" onclick="toggleMobileMenu()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+        </button>
+    </header>
+
+    <div class="subheader glass-panel">
+        <div class="nav-item-dropdown">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            دسته‌بندی‌ها
+            <div class="solid-menu">
+                {% for cat in categories %}
+                    {% if not cat.parent %}
+                        <div class="parent-category">
+                            <a href="{% url 'stores:category_products' cat.slug %}">
+                                {{ cat.name }}
+                                {% if cat.children.all %}<span style="font-size: 0.8rem;">&larr;</span>{% endif %}
+                            </a>
+                            {% if cat.children.all %}
+                                <div class="submenu">
+                                    {% for sub in cat.children.all %}
+                                        <a href="{% url 'stores:category_products' sub.slug %}">{{ sub.name }}</a>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if user.is_seller %}
+        <a href="{% url 'stores:manage_stores' %}" class="seller-ad">
+            <svg class="icon" viewBox="0 0 24 24" style="width:18px; height:18px;"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+            پنل فروشندگان
+        </a>
+        {% endif %}
+
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-modal" onclick="toggleMobileMenu()" style="background: none; border: none; color: var(--text-color); font-size: 1.2rem; cursor: pointer; text-align: left; margin-bottom: 20px;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+        
+        <div class="search-bar">
+            <form action="{% url 'stores:search_page' %}" method="get">
+                <input type="text" name="q" class="liveSearchInput" placeholder="جستجو در مینی‌کالا..." autocomplete="off">
+            </form>
+            <div class="search-results searchResDiv" style="position: static; margin-top: 5px;"></div>
+        </div>
+
+        <a href="{% url 'stores:home' %}" class="mobile-menu-item">
+            <span><svg class="icon" style="vertical-align: middle; margin-left: 8px;" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>صفحه اصلی</span>
+        </a>
+        
+        <div class="mobile-menu-item" onclick="toggleMobileAccordion('mobileCats')" style="cursor: pointer;">
+            <span><svg class="icon" style="vertical-align: middle; margin-left: 8px;" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>دسته‌بندی‌ها</span>
+            <span style="font-size: 0.8rem;">&#9660;</span>
+        </div>
+        <div class="mobile-accordion-content" id="mobileCats">
+            {% for cat in categories %}
+                {% if not cat.parent %}
+                    <a href="{% url 'stores:category_products' cat.slug %}">{{ cat.name }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'accounts:profile' %}" class="mobile-menu-item">
+                <span><svg class="icon" style="vertical-align: middle; margin-left: 8px;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>پروفایل من</span>
+            </a>
+            {% if user.is_seller %}
+            <a href="{% url 'stores:manage_stores' %}" class="mobile-menu-item">
+                <span><svg class="icon" style="vertical-align: middle; margin-left: 8px;" viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>پنل فروشندگان</span>
+            </a>
+            {% endif %}
+
+            <a href="{% url 'stores:cart_view' %}" class="mobile-menu-item">
+                <span><svg class="icon" style="vertical-align: middle; margin-left: 8px;" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>سبد خرید <span class="persian-num" style="color: var(--danger);">({{ cart_total_items|default:0 }})</span></span>
+            </a>
+
+            <div class="mobile-menu-item" onclick="toggleTheme()" style="cursor: pointer;">
+                <span><svg class="icon" style="vertical-align: middle; margin-left: 8px;" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>تغییر تم رنگی</span>
+            </div>
+            <form action="{% url 'accounts:logout' %}" method="post" style="margin-top: 20px;">
+                {% csrf_token %}
+                <button type="submit" class="btn-glass btn-danger" style="width: 100%;">خروج از حساب</button>
+            </form>
+        {% else %}
+             <a href="{% url 'accounts:login' %}" class="btn-glass btn-primary" style="width: 100%; margin-top: 20px;">ورود / ثبت نام</a>
+        {% endif %}
+    </div>
+
+    <main class="app-container">
+        {% block content %}{% endblock %}
+    </main>
+</div> 
+
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-col">
+            <a href="{% url 'stores:home' %}" class="footer-logo">
+                <img src="{% static 'logos/logo.png' %}" alt="Logo" onerror="this.style.display='none'">
+                مینی‌کالا
+            </a>
+            <p class="footer-desc">مینی‌کالا، بازار آنلاین برای خرید و فروش سریع و امن. بهترین محصولات را با قیمت مناسب پیدا کنید و فروشگاه خود را به راحتی بسازید.</p>
+            <div class="footer-trust-seals">
+                <img src="{% static 'image/enamad.png' %}" alt="نماد اعتماد" onerror="this.src='https://via.placeholder.com/80x80/fff?text=Enamad';">
+                <img src="{% static 'image/samandehi.png' %}" alt="ساماندهی" onerror="this.src='https://via.placeholder.com/80x80/fff?text=Samandehi';">
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-title">لینک‌های مفید</h4>
+            <ul class="footer-links">
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'accounts:profile' %}">پروفایل من</a></li>
+                <li><a href="{% url 'stores:manage_stores' %}">پنل فروشندگی</a></li>
+                {% else %}
+                <li><a href="{% url 'accounts:login' %}">ورود به حساب</a></li>
+                {% endif %}
+                <li><a href="{% url 'accounts:about_us' %}">درباره ما</a></li>
+                <li><a href="{% url 'accounts:terms' %}">قوانین و مقررات</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-title">دسته‌بندی‌های پربازدید</h4>
+            <ul class="footer-links">
+                {% for cat in categories|slice:":4" %}
+                    {% if not cat.parent %}
+                        <li><a href="{% url 'stores:category_products' cat.slug %}">{{ cat.name }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-title">ارتباط با ما</h4>
+            <div class="footer-contact">
+                <p><svg class="icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> تهران، پلاک ۱۲۳</p>
+                <p><svg class="icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ۰۲۱-۱۲۳۴۵۶۷۸</p>
+                <p><svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.26-3.83 2.5-.27.18-.51.27-.73.26-.24-.01-.7-.14-1.04-.25-.42-.14-.75-.22-.72-.47.02-.13.2-.27.56-.42 2.19-.95 3.65-1.55 4.38-1.85 2.08-.86 2.51-1.01 2.8-1.01.06 0 .2.01.29.08.07.06.1.13.1.2z"/></svg> تلگرام: miladbasery@</p>
+                <p><svg class="icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 10H7v-2h10v2zm0-3H7V7h10v2z"/></svg> بله: miladbasery@</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>تمامی حقوق برای مینی‌کالا محفوظ است. © ۱۴۰۵</p>
+    </div>
+</footer>
+
+<script>
+    function toggleTheme() {
+        const doc = document.documentElement;
+        const newTheme = doc.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        doc.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    }
+    function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+    function toggleMobileAccordion(id) { document.getElementById(id).classList.toggle('open'); }
+
+    const searchInputs = document.querySelectorAll('.liveSearchInput');
+    searchInputs.forEach(input => {
+        input.addEventListener('input', async (e) => {
+            const val = e.target.value.trim();
+            const searchRes = e.target.closest('.search-bar').querySelector('.searchResDiv');
+            if(val.length < 2) { searchRes.style.display = 'none'; return; }
+            try {
+                const res = await fetch(`{% url 'stores:live_search' %}?q=${val}`);
+                const data = await res.json();
+                searchRes.innerHTML = '';
+                let hasRes = false;
+                ['products', 'categories', 'stores'].forEach(key => {
+                    data[key].forEach(i => {
+                        hasRes = true;
+                        searchRes.innerHTML += `<a href="/search?q=${i.name}">${i.name} <span style="font-size:0.7rem;color:var(--primary);">(${key})</span></a>`;
+                    });
+                });
+                searchRes.style.display = hasRes ? 'flex' : 'none';
+            } catch (err) { console.error(err); }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const numbers = document.querySelectorAll('.persian-num');
+        numbers.forEach(el => { 
+            let text = el.innerText.trim();
+            if(el.classList.contains('format-price')) {
+                text = formatPriceCommas(text);
+            }
+            el.innerText = toPersianNum(text); 
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,413 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<a href="http://127.0.0.1:8080/stores/chitan-pitan/" class="hero-banner glass-panel">
+    <img src="{% static 'image/image_new_1.png' %}" alt="بنر اصلی یک" onerror="this.src='https://via.placeholder.com/1400x300/ff8c00/fff?text=Banner+1';">
+</a>
+
+<div class="category-icons-section glass-panel">
+    {% for cat in categories %}
+        {% if not cat.parent %}
+        <a href="{% url 'stores:category_products' cat.slug %}" class="cat-item">
+            <div class="cat-circle">
+                {% if forloop.counter == 1 %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="#e67e00" fill-rule="evenodd" d="M13.944 1.25h.112c1.838 0 3.294 0 4.433.153c1.172.158 2.121.49 2.87 1.238c.748.749 1.08 1.698 1.238 2.87c.153 1.14.153 2.595.153 4.433v4.112c0 1.838 0 3.294-.153 4.433c-.158 1.172-.49 2.121-1.238 2.87c-.749.748-1.698 1.08-2.87 1.238c-1.14.153-2.595.153-4.433.153H12a.75.75 0 0 1 0-1.5h2c1.907 0 3.262-.002 4.29-.14c1.005-.135 1.585-.389 2.008-.812s.677-1.003.812-2.009c.139-1.027.14-2.382.14-4.289v-4c0-1.907-.002-3.261-.14-4.29c-.135-1.005-.389-1.585-.812-2.008s-1.003-.677-2.009-.812c-1.027-.138-2.382-.14-4.289-.14s-3.261.002-4.289.14c-1.006.135-1.586.389-2.009.812c-.696.696-.907 1.777-.943 4.309a.75.75 0 1 1-1.5-.022c.035-2.427.192-4.158 1.382-5.348c.749-.748 1.698-1.08 2.87-1.238c1.14-.153 2.595-.153 4.433-.153m-8.482 9h.076c.67 0 1.229 0 1.681.046c.473.048.913.153 1.309.418c.3.2.558.458.759.758c.264.396.369.835.417 1.309c.046.452.046 1.011.046 1.68v4.077c0 .67 0 1.229-.046 1.681c-.048.473-.153.913-.417 1.309a2.8 2.8 0 0 1-.76.759c-.395.264-.835.369-1.308.417c-.452.046-1.011.046-1.68.046h-.077c-.67 0-1.229 0-1.681-.046c-.473-.048-.913-.153-1.309-.418a2.8 2.8 0 0 1-.759-.758c-.264-.396-.369-.835-.417-1.309c-.046-.452-.046-1.011-.046-1.68v-4.077c0-.67 0-1.229.046-1.681c.048-.474.153-.913.417-1.309c.201-.3.459-.558.76-.758c.395-.265.835-.37 1.308-.418c.452-.046 1.011-.046 1.68-.046m-1.53 1.538c-.354.036-.518.1-.626.173a1.3 1.3 0 0 0-.345.345c-.073.108-.137.272-.173.627c-.037.367-.038.85-.038 1.567v4c0 .718 0 1.2.038 1.567c.036.355.1.519.173.628c.09.136.208.253.345.344c.108.073.272.137.627.173c.367.037.85.038 1.567.038c.718 0 1.2 0 1.567-.038c.355-.036.519-.1.627-.173c.137-.09.254-.208.345-.344c.073-.109.137-.273.173-.628c.037-.367.038-.85.038-1.567v-4c0-.718 0-1.2-.038-1.567c-.036-.355-.1-.519-.173-.627a1.3 1.3 0 0 0-.345-.345c-.108-.073-.272-.137-.627-.173c-.367-.037-.85-.038-1.567-.038c-.718 0-1.2 0-1.567.038M11.25 19a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5a.75.75 0 0 1-.75-.75" clip-rule="evenodd"/></svg>
+                {% elif forloop.counter == 2 %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="#e67e00" fill-rule="evenodd" d="M9.445 3.25h5.11c1.367 0 2.47 0 3.337.117c.9.12 1.658.38 2.26.981c.602.602.86 1.36.982 2.26c.116.867.116 1.97.116 3.337v4.323c.848.121 1.5.85 1.5 1.732v1A3.75 3.75 0 0 1 19 20.75H5A3.75 3.75 0 0 1 1.25 17v-1a1.75 1.75 0 0 1 1.5-1.732V9.945c0-1.367 0-2.47.117-3.337c.12-.9.38-1.658.981-2.26c.602-.602 1.36-.86 2.26-.981c.867-.117 1.97-.117 3.337-.117M3 15.75a.25.25 0 0 0-.25.25v1A2.25 2.25 0 0 0 5 19.25h14A2.25 2.25 0 0 0 21.25 17v-1a.25.25 0 0 0-.25-.25h-4.333c-.27 0-.534.088-.75.25l-.934.7a2.75 2.75 0 0 1-1.65.55h-2.666a2.75 2.75 0 0 1-1.65-.55l-.934-.7a1.25 1.25 0 0 0-.75-.25zm16.75-1.5h-3.083a2.75 2.75 0 0 0-1.65.55l-.934.7a1.25 1.25 0 0 1-.75.25h-2.666a1.25 1.25 0 0 1-.75-.25l-.934-.7a2.75 2.75 0 0 0-1.65-.55H4.25V10c0-1.435.002-2.437.103-3.192c.099-.734.28-1.122.556-1.399c.277-.277.665-.457 1.4-.556c.754-.101 1.756-.103 3.191-.103h5c1.435 0 2.436.002 3.192.103c.734.099 1.122.28 1.399.556c.277.277.457.665.556 1.4c.101.754.103 1.756.103 3.191z" clip-rule="evenodd"/></svg> 
+                {% elif forloop.counter == 3 %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="#e67e00" fill-rule="evenodd" d="M7.945 2.25h8.11c1.367 0 2.47 0 3.337.117c.9.12 1.658.38 2.26.981c.602.602.86 1.36.982 2.26c.116.867.116 1.97.116 3.337v1.11c0 1.367 0 2.47-.116 3.337c-.122.9-.38 1.658-.982 2.26s-1.36.86-2.26.982c-.867.116-1.97.116-3.337.116H12.75v1.71l5.487 1.828a.75.75 0 0 1-.474 1.424L12 19.79l-5.763 1.92a.75.75 0 1 1-.474-1.422l5.487-1.83V16.75H7.945c-1.367 0-2.47 0-3.337-.116c-.9-.122-1.658-.38-2.26-.982s-.86-1.36-.981-2.26c-.117-.867-.117-1.97-.117-3.337v-1.11c0-1.367 0-2.47.117-3.337c.12-.9.38-1.658.981-2.26c.602-.602 1.36-.86 2.26-.981c.867-.117 1.97-.117 3.337-.117M4.808 3.853c-.734.099-1.122.28-1.399.556c-.277.277-.457.665-.556 1.4C2.752 6.562 2.75 7.564 2.75 9v1c0 1.435.002 2.437.103 3.192c.099.734.28 1.122.556 1.399c.277.277.665.457 1.4.556c.754.101 1.756.103 3.191.103h8c1.435 0 2.436-.002 3.192-.103c.734-.099 1.122-.28 1.399-.556c.277-.277.457-.665.556-1.4c.101-.755.103-1.756.103-3.191V9c0-1.435-.002-2.437-.103-3.192c-.099-.734-.28-1.122-.556-1.399c-.277-.277-.665-.457-1.4-.556c-.755-.101-1.756-.103-3.191-.103H8c-1.435 0-2.437.002-3.192.103" clip-rule="evenodd"/></svg>
+                {% elif forloop.counter == 4 %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><g fill="none"><path fill="#e67e00" d="M19 18h.75zM5 14.584h.75a.75.75 0 0 0-.45-.687zm14 0l-.3-.687a.75.75 0 0 0-.45.687zM15.75 7a.75.75 0 0 0 1.5 0zm-9 0a.75.75 0 0 0 1.5 0zM7 4.25A5.75 5.75 0 0 0 1.25 10h1.5A4.25 4.25 0 0 1 7 5.75zm10 1.5A4.25 4.25 0 0 1 21.25 10h1.5A5.75 5.75 0 0 0 17 4.25zm-2 15.5H9v1.5h6zm-6 0c-.964 0-1.612-.002-2.095-.067c-.461-.062-.659-.169-.789-.3l-1.06 1.062c.455.455 1.022.64 1.65.725c.606.082 1.372.08 2.294.08zM4.25 18c0 .922-.002 1.688.08 2.294c.084.628.27 1.195.725 1.65l1.061-1.06c-.13-.13-.237-.328-.3-.79c-.064-.482-.066-1.13-.066-2.094zm14 0c0 .964-.002 1.612-.067 2.095c-.062.461-.169.659-.3.789l1.062 1.06c.455-.455.64-1.022.725-1.65c.082-.606.08-1.372.08-2.294zM15 22.75c.922 0 1.688.002 2.294-.08c.628-.084 1.195-.27 1.65-.726l-1.06-1.06c-.13.13-.328.237-.79.3c-.482.064-1.13.066-2.094.066zm-8-17q.32 0 .628.046l.219-1.484A6 6 0 0 0 7 4.25zm5-4.5a5.25 5.25 0 0 0-4.973 3.563l1.42.482A3.75 3.75 0 0 1 12 2.75zM7.027 4.813A5.3 5.3 0 0 0 6.75 6.5h1.5c0-.423.07-.828.198-1.205zM17 4.25q-.431 0-.847.062l.22 1.484A4 4 0 0 1 17 5.75zm-5-1.5a3.75 3.75 0 0 1 3.552 2.545l1.42-.482A5.25 5.25 0 0 0 12 1.25zm3.552 2.545c.128.377.198.782.198 1.205h1.5c0-.589-.097-1.156-.277-1.687zM5.75 18v-3.416h-1.5V18zm-.45-4.103A4.25 4.25 0 0 1 2.75 10h-1.5a5.75 5.75 0 0 0 3.45 5.271zm12.95.687V18h1.5v-3.416zm3-4.584a4.25 4.25 0 0 1-2.55 3.897l.6 1.374A5.75 5.75 0 0 0 22.75 10zm-5.5-3.5V7h1.5v-.5zm-9 0V7h1.5v-.5z"/><path stroke="#e67e00" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.8" d="M5 18h14"/></g></svg>
+                {% elif forloop.counter == 5 %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="#e67e00" fill-rule="evenodd" d="M8.945 1.25h1.11c1.367 0 2.47 0 3.337.117c.9.12 1.658.38 2.26.981c.602.602.86 1.36.982 2.26c.116.867.116 1.97.116 3.337v8.305h.821c1.204 0 2.179.975 2.179 2.179v.071a.75.75 0 0 0 1.5 0v-3.96l-1.462-.487a2.25 2.25 0 0 1-1.538-2.134V9.5a2.25 2.25 0 0 1 2.25-2.25h.742a2.25 2.25 0 0 0-.74-1.483a6 6 0 0 0-.237-.195l-1.233-.986a.75.75 0 1 1 .936-1.172l1.25 1c.122.098.206.165.285.236a3.75 3.75 0 0 1 1.241 2.582c.006.105.006.213.006.37V18.5a2.25 2.25 0 0 1-4.5 0v-.071a.68.68 0 0 0-.679-.679h-.821v3.5H17a.75.75 0 0 1 0 1.5H2a.75.75 0 0 1 0-1.5h.25V7.945c0-1.367 0-2.47.117-3.337c.12-.9.38-1.658.981-2.26c.602-.602 1.36-.86 2.26-.981c.867-.117 1.97-.117 3.337-.117m-5.195 20h11.5V8c0-1.435-.002-2.437-.103-3.192c-.099-.734-.28-1.122-.556-1.399c-.277-.277-.665-.457-1.4-.556c-.755-.101-1.756-.103-3.191-.103H9c-1.435 0-2.437.002-3.192.103c-.734.099-1.122.28-1.399.556c-.277.277-.457.665-.556 1.4C3.752 5.562 3.75 6.564 3.75 8zm17.5-8.29V8.75h-.75a.75.75 0 0 0-.75.75v2.419c0 .323.207.61.513.711zM9.886 9.356a.75.75 0 0 1 .257 1.029l-.818 1.364H11a.75.75 0 0 1 .643 1.136l-1.5 2.5a.75.75 0 1 1-1.286-.772l.818-1.364H8a.75.75 0 0 1-.643-1.136l1.5-2.5a.75.75 0 0 1 1.029-.257" clip-rule="evenodd"/></svg>
+                {% elif forloop.counter == 6 %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="#e67e00" fill-rule="evenodd" d="M7.75 5.618a1.75 1.75 0 0 0-2.533-1.565l-2 1a1.75 1.75 0 0 0-.967 1.565v3.632H2a.75.75 0 0 0-.75.75v6a3.75 3.75 0 1 0 7.5 0v-6a.75.75 0 0 0-.75-.75h-.25zm-5 6.132h4.5V17a2.25 2.25 0 1 1-4.5 0zm3.5-1.5V5.618a.25.25 0 0 0-.362-.224l-2 1a.25.25 0 0 0-.138.224v3.632zm10.25-6a6.25 6.25 0 0 0-.75 12.455v2.545H13.5a.75.75 0 0 0 0 1.5h6a.75.75 0 1 0 0-1.5h-2.25v-2.545A6.251 6.251 0 0 0 16.5 4.25m0 11a4.75 4.75 0 1 0 0-9.5a4.75 4.75 0 0 0 0 9.5" clip-rule="evenodd"/></svg>
+                {% elif forloop.counter == 7 %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="#e67e00" fill-rule="evenodd" d="M10.286 3.91c0-.568.538-1.16 1.374-1.16s1.374.592 1.374 1.16c0 .311-.112.581-.294.78a11 11 0 0 1-.38.385l-.08.08a9 9 0 0 0-.529.558c-.265.312-.553.723-.658 1.23a4.3 4.3 0 0 0-1.774.722l-7.095 4.992c-.927.652-1.166 1.702-.828 2.582c.332.866 1.194 1.511 2.306 1.511H5.26c-.01.364-.01.764-.01 1.198v.104c0 .899 0 1.648.08 2.242c.085.628.27 1.195.726 1.65c.456.456 1.023.642 1.65.726c.595.08 1.344.08 2.243.08h4.104c.898 0 1.648 0 2.242-.08c.628-.084 1.195-.27 1.65-.726c.456-.455.642-1.022.726-1.65c.08-.594.08-1.343.08-2.242v-.104c0-.434 0-.834-.01-1.198h1.557c1.125 0 1.99-.657 2.316-1.533c.33-.891.073-1.948-.877-2.588l-7.433-5.01a4.3 4.3 0 0 0-1.614-.66q.075-.121.205-.274c.126-.149.274-.298.44-.464l.075-.072c.14-.14.295-.292.435-.445c.443-.48.69-1.115.69-1.795c0-1.542-1.364-2.659-2.874-2.659S8.786 2.367 8.786 3.91a.75.75 0 0 0 1.5 0m8.3 11.34h1.711c.509 0 .806-.277.91-.555c.097-.264.047-.582-.31-.822l-7.432-5.01a2.9 2.9 0 0 0-1.655-.483a2.9 2.9 0 0 0-1.628.512l-7.095 4.991c-.346.243-.391.558-.29.819c.105.275.403.548.905.548h1.712c.109-.447.299-.852.641-1.194c.456-.456 1.023-.642 1.65-.726c.595-.08 1.344-.08 2.243-.08h4.104c.898 0 1.648 0 2.242.08c.628.084 1.195.27 1.65.726c.343.342.533.747.642 1.194m-11.47-.134c.13-.13.328-.237.79-.3c.482-.064 1.13-.066 2.094-.066h4c.964 0 1.611.002 2.094.066c.462.063.66.17.79.3s.237.328.3.79c.064.482.066 1.13.066 2.094s-.002 1.612-.067 2.095c-.062.461-.169.659-.3.789s-.327.237-.789.3c-.483.064-1.13.066-2.094.066h-4c-.964 0-1.612-.002-2.095-.067c-.461-.062-.659-.169-.79-.3c-.13-.13-.237-.327-.299-.788c-.065-.483-.066-1.131-.066-2.095s.001-1.612.066-2.095c.062-.461.17-.659.3-.789" clip-rule="evenodd"/></svg>
+                {% elif forloop.counter == 8 %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="#e67e00" d="M6 3h11l3.9 5.57L11.5 22L2.1 8.57zm4.16 1l-1.7 4h6.08l-1.7-4zM8.33 9l3.17 9.76L14.67 9zM3.72 8h3.66l1.7-4H6.5zm-.1 1l6.82 9.75L7.28 9zm15.66-1L16.5 4h-2.58l1.7 4zm.1 1h-3.66l-3.16 9.75z"/></svg>
+                {% elif forloop.counter == 9 %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="72" height="72"><path fill="#e67e00" fill-rule="evenodd" d="M13.864 5.783c-.313-.032-.72-.033-1.336-.033H12a.75.75 0 0 1 0-1.5h.565c.57 0 1.054 0 1.454.041c.425.044.819.14 1.19.37c.373.23.634.539.864.9c.202.318.406.72.64 1.189h1.155c.284 0 .545 0 .762.02c.235.02.49.069.738.21c.272.155.497.38.652.652c.141.248.19.503.21.738c.02.217.02.478.02.762v.093c0 .26.001.538-.083.802a1.8 1.8 0 0 1-.25.494c-.162.224-.386.389-.596.542l-.052.039l-.277.204l.487.974a3.75 3.75 0 1 1-4.154 4.47h-5.15a3.751 3.751 0 0 1-7.352-.009A1.75 1.75 0 0 1 1.25 14.92v-.057c0-.335 0-.548.015-.735a4.75 4.75 0 0 1 4.362-4.362c.187-.015.4-.015.735-.015h.69c.898 0 1.648 0 2.242.08c.628.084 1.195.27 1.65.726c.456.455.642 1.022.726 1.65c.08.594.08 1.344.08 2.242v.802h3.575a3.76 3.76 0 0 1 2.548-2.828l-2.438-4.875c-.276-.552-.458-.915-.628-1.18c-.16-.252-.274-.361-.386-.43c-.111-.07-.26-.123-.557-.154M10.25 15.25v-.75c0-.964-.002-1.612-.066-2.095c-.063-.461-.17-.659-.3-.789s-.328-.237-.79-.3c-.482-.064-1.13-.066-2.094-.066h-.6c-.386 0-.535 0-.655.01a3.25 3.25 0 0 0-2.985 2.985a10 10 0 0 0-.01.754c.01.122.129.24.25.25zm-5.872 1.5a2.25 2.25 0 0 0 4.244 0zM16.75 16a2.25 2.25 0 1 1 4.5 0a2.25 2.25 0 0 1-4.5 0m1.56-6.055l.07-.051c.138-.102.216-.16.272-.206l.05-.047a.3.3 0 0 0 .036-.07c-.002.006.004-.005.007-.069c.005-.073.005-.17.005-.341c0-.323 0-.515-.013-.657a.6.6 0 0 0-.022-.13a.25.25 0 0 0-.088-.09a.6.6 0 0 0-.131-.02a8 8 0 0 0-.657-.014h-.375z" clip-rule="evenodd"/></svg>
+                {% elif forloop.counter == 10 %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="72" height="72"><path fill="#e67e00" d="M17.25 7a.75.75 0 0 0-1.5 0v1.25H14.5a.75.75 0 0 0 0 1.5h1.25V11a.75.75 0 0 0 1.5 0V9.75h1.25a.75.75 0 0 0 0-1.5h-1.25z"/><path fill="#e67e00" fill-rule="evenodd" d="M22.75 9.318c0-3.326-1.482-5.808-3.79-6.711c-2.135-.837-4.698-.211-6.96 1.906C9.738 2.396 7.175 1.77 5.04 2.607c-2.308.903-3.79 3.385-3.79 6.71c0 2.119 1.13 4.203 2.537 5.997c1.422 1.813 3.21 3.436 4.702 4.647l.134.11c1.2.975 2.068 1.68 3.377 1.68c1.31 0 2.176-.705 3.377-1.68l.134-.11c1.492-1.21 3.28-2.834 4.702-4.647c1.407-1.794 2.537-3.878 2.537-5.996M12.548 6.087c2.112-2.259 4.301-2.696 5.866-2.084c1.568.614 2.836 2.41 2.836 5.315c0 1.611-.88 3.364-2.218 5.07c-1.324 1.69-3.016 3.232-4.466 4.409c-1.393 1.13-1.843 1.453-2.566 1.453s-1.173-.323-2.566-1.454c-1.45-1.176-3.142-2.719-4.466-4.407c-1.339-1.707-2.218-3.46-2.218-5.071c0-2.905 1.268-4.7 2.836-5.315c1.565-.612 3.754-.175 5.866 2.084a.75.75 0 0 0 1.096 0" clip-rule="evenodd"/></svg>
+                {% else %}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="72" height="72"><g fill="none"><g clip-path="url(#SVGXv8lpc2Y)"><path fill="#e67e00" fill-rule="evenodd" d="M11.372.19c.38-.253.875-.253 1.256 0L23.492 7.4c.317.21.508.565.508.946v7.308c0 .38-.19.736-.508.947l-10.864 7.21c-.38.252-.875.252-1.256 0L.508 16.6A1.14 1.14 0 0 1 0 15.654V8.346c0-.38.19-.736.508-.947zm-9.1 10.273v3.058l2.288-1.54zm4.337 2.878L3.18 15.648l7.684 5.1v-4.583zm6.527 2.824v4.582l7.684-5.1l-3.43-2.306zm6.304-4.183l2.288 1.54v-3.06zm1.37-3.636l-3.41 2.263l-4.264-2.868V3.253zm-9.946-5.093V7.74l-4.263 2.868L3.19 8.346zM12 9.715l-3.35 2.254L12 14.192l3.35-2.223z" clip-rule="evenodd"/></g><defs/></g></svg>{% endif %}
+            </div>
+            <span class="cat-name">{{ cat.name }}</span>
+        </a>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="discount-section">
+    <div class="discount-title-box">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><g fill="#ffffff" fill-rule="evenodd" clip-rule="evenodd"><path d="M16.196 5.334c-1.05-.31-2.17-.64-3.299-.94c-3.658-.999-7.356-1.749-8.366-1.998c-.29-.03-.13-.2-1.67 2.578a10 10 0 0 0-.519 1q-.25.53-.43 1.09c-.29.86-.49 1.729-.7 2.598a.37.37 0 0 0 .368.48a.35.35 0 0 0 .312-.24c.39-.79.82-1.54 1.22-2.329c.17-.34.32-.67.48-1s.29-.679.42-.999c.3-.75.589-1.49.899-2.229c1.43.45 4.498 1.48 7.616 2.41c1.12.329 2.25.639 3.299.919c2.369.63 4.338 1.09 4.998 1.28l2.179.679a4 4 0 0 0-.4.5q-.075.15-.13.31a1.6 1.6 0 0 0-.08.33c-.16 1.159 0 1.269.2 1.339s.35.22 1-.91q.1-.144.16-.31q.06-.165.08-.34c.07-.7-.14-.31.14-1a.4.4 0 0 0-.23-.519l-2.63-1.06c-.62-.24-2.548-.909-4.917-1.639"/><path d="M1.822 5.094c.19-.56.33-1.12.47-1.709c.19-.83.35-1.66.56-2.479h.05l11.225 2.07c1.31.21 2.639.41 3.938.66c.77.149 1.53.329 2.279.529a3 3 0 0 0-.2.34q-.045.135-.06.28q-.023.15 0 .3c.08 1.079.27 1.149.47 1.179s.39 0 .8-1a1.4 1.4 0 0 0 .07-.29q.022-.15 0-.3a3.7 3.7 0 0 0-.19-.7a.4.4 0 0 0-.1-.269a.4.4 0 0 0-.24-.21c-.85-.31-1.72-.57-2.6-.81c-1.289-.36-2.608-.65-3.917-1c-1.51-.299-2.999-.609-4.528-.829c-7.467-1.06-7.677-.5-7.737-.34c-.37.8-.73 1.6-1 2.43c-.17.35-.29.709-.39 1.029q-.165.557-.27 1.13C.274 5.973.184 6.813.014 7.682a.36.36 0 0 0 .24.44a.36.36 0 0 0 .46-.24c.39-.91.8-1.829 1.11-2.789M12.128 13.2a1.88 1.88 0 0 0 .81-1.479a1.46 1.46 0 0 0-.29-.89a2 2 0 0 0-3.29.32a1.71 1.71 0 0 0 1.06 2.42a1.94 1.94 0 0 0 1.71-.37m-1.64-1.818a.87.87 0 0 1 1.3-.1a.52.52 0 0 1 .07.39c0 .21-.25.35-.46.47a.68.68 0 0 1-.55.13a.56.56 0 0 1-.36-.89m1.13 5.017a1.708 1.708 0 0 0 1.05 2.418a2 2 0 0 0 1.719-.37a1.9 1.9 0 0 0 .81-1.479a1.54 1.54 0 0 0-.29-.88a1.998 1.998 0 0 0-3.29.31m1.999.999a.7.7 0 0 1-.56.13a.56.56 0 0 1-.35-.89a.86.86 0 0 1 1.3-.09a.48.48 0 0 1 .07.38c.01.2-.21.34-.42.46zM8.54 15.97a.35.35 0 0 0 .46.2c.999-.29 1.998-.54 2.998-.91c.64-.25 1.25-.58 1.869-.86c.44-.23.86-.48 1.31-.7q.418-.223.859-.4a.401.401 0 1 0-.23-.769l-2.419.72c-.64.25-1.3.47-1.919.77c-.94.45-1.8.999-2.719 1.489a.35.35 0 0 0-.21.46"/><path d="M23.812 12.97c-1.939-1.069-3.878-2.138-5.857-3.118c-.86-.42-1.72-.82-2.599-1.2a43 43 0 0 0-2.649-1.059c-1.739-.63-6.996-2.289-7.236-1.999c-.68 1.1-1.35 2.13-1.93 3.209c-.25.47-.49.95-.7 1.43c-.21.479-.419.999-.599 1.468c-.44 1.15-.8 2.32-1.19 3.509a.404.404 0 1 0 .75.3c.53-1.12 1.09-2.21 1.61-3.299c.23-.47.46-.94.68-1.42l.629-1.429c.42-1 .82-2.059 1.26-3.098a.5.5 0 0 0 .13.11c1.789.61 3.528 1.32 5.257 1.999l1.93.84l2.898 1.239q3.464 1.5 6.897 2.999c-.4 1-.88 1.929-1.33 2.888c-.31.68-.61 1.36-.89 2.05c-.46 1.159-.859 2.338-1.289 3.528a.41.41 0 0 0 .661.45a.4.4 0 0 0 .089-.13c.53-1 1.09-2 1.6-2.999q.514-1.01.919-2.069c.03.02 1.41-3.978.96-4.198m-5.868 9.995c-2-.86-3.998-1.829-5.997-2.758c-1.34-.62-2.67-1.25-3.998-1.83c-2.27-1-4.568-1.819-6.897-2.648a.35.35 0 0 0-.47.2a.36.36 0 0 0 .19.46c1.999.929 3.998 1.948 5.997 2.898c1.33.64 2.669 1.25 3.998 1.83c2.27.999 4.578 1.808 6.917 2.608a.41.41 0 0 0 .482-.07a.41.41 0 0 0-.192-.69z"/></g></svg>
+        <h3 style="font-size: 1.2rem;">تخفیف‌های ویژه</h3>
+    </div>
+    
+    <div class="discount-cards-wrapper">
+        {% for product in products|slice:":20" %}
+            {% if product.discount_percent > 0 %}
+            <div class="card">
+                <div class="card-image-wrapper">
+                    <a href="{% url 'stores:product_detail' product.id %}">
+                        {% if product.image %}
+                            <img src="{{ product.get_image_url }}" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{{ product.get_image_url }}" alt="{{ product.name }}">
+                        {% endif %}
+                    </a>
+                    {% if product.category %}
+                        <a href="{% url 'stores:category_products' product.category.slug %}" class="card-category-overlay">{{ product.category.name }}</a>
+                    {% endif %}
+                </div>
+                
+                <a href="{% url 'stores:product_detail' product.id %}" class="card-title" title="{{ product.name }}">{{ product.name }}</a>
+                <a href="{% url 'stores:store_detail' product.store.slug %}" class="store-link">
+                    <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+                    {{ product.store.name }}
+                </a>
+
+                <div class="card-header-info">
+                    {% if product.average_rating %}
+                        <span class="rating-badge">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <span class="persian-num">{{ product.average_rating }}</span>
+                        </span>
+                    {% else %}
+                        <span style="font-size: 0.8rem; color: #888;">بدون امتیاز</span>
+                    {% endif %}
+                </div>
+                
+                <div class="price-section">
+                    <div style="display: flex; flex-direction: column;">
+                        <span class="price-discount persian-num format-price">{{ product.price }}</span>
+                        <span class="price-final"><span class="persian-num format-price">{{ product.final_price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                    </div>
+                    <div class="discount-badge">
+                        <span class="persian-num">{{ product.discount_percent }}</span>٪
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<h2 style="margin-top: 30px; margin-bottom: 20px;">جدیدترین محصولات</h2>
+<div class="horizontal-scroll-wrapper">
+    {% for product in products|slice:":20" %}
+        <div class="card">
+            <div class="card-image-wrapper">
+                <a href="{% url 'stores:product_detail' product.id %}">
+                    {% if product.image %}
+                        <img src="{{ product.get_image_url }}" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{{ product.get_image_url }}" alt="{{ product.name }}">
+                    {% endif %}
+                </a>
+                {% if product.category %}
+                    <a href="{% url 'stores:category_products' product.category.slug %}" class="card-category-overlay">{{ product.category.name }}</a>
+                {% endif %}
+            </div>
+            
+            <a href="{% url 'stores:product_detail' product.id %}" class="card-title" title="{{ product.name }}">{{ product.name }}</a>
+            <a href="{% url 'stores:store_detail' product.store.slug %}" class="store-link">
+                <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+                {{ product.store.name }}
+            </a>
+            
+            <div class="card-header-info">
+                {% if product.average_rating %}
+                    <span class="rating-badge">
+                        <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <span class="persian-num">{{ product.average_rating }}</span>
+                    </span>
+                {% else %}
+                    <span style="font-size: 0.8rem; color: #888;">بدون امتیاز</span>
+                {% endif %}
+            </div>
+            
+            <div class="price-section">
+                {% if product.discount_percent > 0 %}
+                    <div style="display: flex; flex-direction: column;">
+                        <span class="price-discount persian-num format-price">{{ product.price }}</span>
+                        <span class="price-final"><span class="persian-num format-price">{{ product.final_price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                    </div>
+                    <div class="discount-badge">
+                        <span class="persian-num">{{ product.discount_percent }}</span>٪
+                    </div>
+                {% else %}
+                    <span class="price-final" style="width: 100%; text-align: left;"><span class="persian-num format-price">{{ product.price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>محصولی یافت نشد.</p>
+    {% endfor %}
+</div>
+
+<a href="http://127.0.0.1:8080/stores/farhadi-things/" class="hero-banner glass-panel" style="margin-top: 40px; margin-bottom: 40px;">
+    <img src="{% static 'image/image_new_2.png' %}" alt="بنر اصلی دو" onerror="this.src='https://via.placeholder.com/1400x300/ff5722/fff?text=Banner+2';">
+</a>
+
+<h2 style="margin-top: 20px; margin-bottom: 20px;">آخرین نظرات کاربران</h2>
+<div class="comments-container">
+    {% for comment in latest_comments %}
+        <div class="comment-card">
+            <div class="comment-header">
+                <a href="{% url 'accounts:public_profile' comment.user.id %}" class="comment-user-info">
+                    {% if comment.user.avatar %}
+                        <img src="{{ comment.user.avatar.url }}" alt="avatar" class="comment-avatar">
+                    {% else %}
+                        <img src="https://via.placeholder.com/40" alt="avatar" class="comment-avatar">
+                    {% endif %}
+                    <div style="display: flex; flex-direction: column;">
+                        <span class="comment-name">{{ comment.user.name|default:comment.user.phone_number }}</span>
+                        <span style="font-size: 0.75rem; color: #888;" class="persian-num">{{ comment.created_at|date:"Y/m/d" }}</span>
+                    </div>
+                </a>
+                <div class="comment-rating">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= comment.rating %}
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="comment-body">
+                "{{ comment.text }}"
+            </div>
+            <div class="comment-footer">
+                <span style="color: #888;">محصول:</span>
+                <a href="{% url 'stores:product_detail' comment.product.id %}" class="comment-product-link">{{ comment.product.name }}</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<h2 style="margin-top: 40px; margin-bottom: 20px;">موبایل و لوازم جانبی</h2>
+<div class="horizontal-scroll-wrapper">
+    {% for product in mobile_products|slice:":20" %}
+        <div class="card">
+            <div class="card-image-wrapper">
+                <a href="{% url 'stores:product_detail' product.id %}">
+                    {% if product.image %}<img src="{{ product.get_image_url }}" alt="{{ product.name }}">{% else %}<img src="{{ product.get_image_url }}" alt="{{ product.name }}">{% endif %}
+                </a>
+                {% if product.category %}
+                    <a href="{% url 'stores:category_products' product.category.slug %}" class="card-category-overlay">{{ product.category.name }}</a>
+                {% endif %}
+            </div>
+            <a href="{% url 'stores:product_detail' product.id %}" class="card-title" title="{{ product.name }}">{{ product.name }}</a>
+            <a href="{% url 'stores:store_detail' product.store.slug %}" class="store-link">
+                <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+                {{ product.store.name }}
+            </a>
+            <div class="card-header-info">
+                {% if product.average_rating %}
+                    <span class="rating-badge">
+                        <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <span class="persian-num">{{ product.average_rating }}</span>
+                    </span>
+                {% else %}
+                    <span style="font-size: 0.8rem; color: #888;">بدون امتیاز</span>
+                {% endif %}
+            </div>
+            <div class="price-section">
+                {% if product.discount_percent > 0 %}
+                    <div style="display: flex; flex-direction: column;">
+                        <span class="price-discount persian-num format-price">{{ product.price }}</span>
+                        <span class="price-final"><span class="persian-num format-price">{{ product.final_price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                    </div>
+                    <div class="discount-badge">
+                        <span class="persian-num">{{ product.discount_percent }}</span>٪
+                    </div>
+                {% else %}
+                    <span class="price-final" style="width: 100%; text-align: left;"><span class="persian-num format-price">{{ product.price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p style="color: #888; padding: 10px;">در حال حاضر محصولی در این دسته وجود ندارد.</p>
+    {% endfor %}
+</div>
+
+<h2 style="margin-top: 40px; margin-bottom: 20px;">سلامت و پزشکی</h2>
+<div class="horizontal-scroll-wrapper">
+    {% for product in health_products|slice:":20" %}
+        <div class="card">
+            <div class="card-image-wrapper">
+                <a href="{% url 'stores:product_detail' product.id %}">
+                    {% if product.image %}<img src="{{ product.get_image_url }}" alt="{{ product.name }}">{% else %}<img src="{{ product.get_image_url }}" alt="{{ product.name }}">{% endif %}
+                </a>
+                {% if product.category %}
+                    <a href="{% url 'stores:category_products' product.category.slug %}" class="card-category-overlay">{{ product.category.name }}</a>
+                {% endif %}
+            </div>
+            <a href="{% url 'stores:product_detail' product.id %}" class="card-title" title="{{ product.name }}">{{ product.name }}</a>
+            <a href="{% url 'stores:store_detail' product.store.slug %}" class="store-link">
+                <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+                {{ product.store.name }}
+            </a>
+            <div class="card-header-info">
+                {% if product.average_rating %}
+                    <span class="rating-badge">
+                        <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <span class="persian-num">{{ product.average_rating }}</span>
+                    </span>
+                {% else %}
+                    <span style="font-size: 0.8rem; color: #888;">بدون امتیاز</span>
+                {% endif %}
+            </div>
+            <div class="price-section">
+                {% if product.discount_percent > 0 %}
+                    <div style="display: flex; flex-direction: column;">
+                        <span class="price-discount persian-num format-price">{{ product.price }}</span>
+                        <span class="price-final"><span class="persian-num format-price">{{ product.final_price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                    </div>
+                    <div class="discount-badge">
+                        <span class="persian-num">{{ product.discount_percent }}</span>٪
+                    </div>
+                {% else %}
+                    <span class="price-final" style="width: 100%; text-align: left;"><span class="persian-num format-price">{{ product.price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p style="color: #888; padding: 10px;">در حال حاضر محصولی در این دسته وجود ندارد.</p>
+    {% endfor %}
+</div>
+
+<h2 style="margin-top: 40px; margin-bottom: 20px;">مد و پوشاک</h2>
+<div class="horizontal-scroll-wrapper">
+    {% for product in fashion_products|slice:":20" %}
+        <div class="card">
+            <div class="card-image-wrapper">
+                <a href="{% url 'stores:product_detail' product.id %}">
+                    {% if product.image %}<img src="{{ product.get_image_url }}" alt="{{ product.name }}">{% else %}<img src="{{ product.get_image_url }}" alt="{{ product.name }}">{% endif %}
+                </a>
+                {% if product.category %}
+                    <a href="{% url 'stores:category_products' product.category.slug %}" class="card-category-overlay">{{ product.category.name }}</a>
+                {% endif %}
+            </div>
+            <a href="{% url 'stores:product_detail' product.id %}" class="card-title" title="{{ product.name }}">{{ product.name }}</a>
+            <a href="{% url 'stores:store_detail' product.store.slug %}" class="store-link">
+                <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+                {{ product.store.name }}
+            </a>
+            <div class="card-header-info">
+                {% if product.average_rating %}
+                    <span class="rating-badge">
+                        <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <span class="persian-num">{{ product.average_rating }}</span>
+                    </span>
+                {% else %}
+                    <span style="font-size: 0.8rem; color: #888;">بدون امتیاز</span>
+                {% endif %}
+            </div>
+            <div class="price-section">
+                {% if product.discount_percent > 0 %}
+                    <div style="display: flex; flex-direction: column;">
+                        <span class="price-discount persian-num format-price">{{ product.price }}</span>
+                        <span class="price-final"><span class="persian-num format-price">{{ product.final_price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                    </div>
+                    <div class="discount-badge">
+                        <span class="persian-num">{{ product.discount_percent }}</span>٪
+                    </div>
+                {% else %}
+                    <span class="price-final" style="width: 100%; text-align: left;"><span class="persian-num format-price">{{ product.price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p style="color: #888; padding: 10px;">در حال حاضر محصولی در این دسته وجود ندارد.</p>
+    {% endfor %}
+</div>
+
+<a href="http://127.0.0.1:8080/stores/digi-style/" class="hero-banner glass-panel" style="margin-top: 40px; margin-bottom: 40px;">
+    <img src="{% static 'image/image_new_3.png' %}" alt="بنر اصلی سه" onerror="this.src='https://via.placeholder.com/1400x300/4caf50/fff?text=Banner+3';">
+</a>
+
+<h2 style="margin-top: 40px; margin-bottom: 20px;">کالای دیجیتال</h2>
+<div class="horizontal-scroll-wrapper">
+    {% for product in digital_products|slice:":20" %}
+        <div class="card">
+            <div class="card-image-wrapper">
+                <a href="{% url 'stores:product_detail' product.id %}">
+                    {% if product.image %}<img src="{{ product.get_image_url }}" alt="{{ product.name }}">{% else %}<img src="{{ product.get_image_url }}" alt="{{ product.name }}">{% endif %}
+                </a>
+                {% if product.category %}
+                    <a href="{% url 'stores:category_products' product.category.slug %}" class="card-category-overlay">{{ product.category.name }}</a>
+                {% endif %}
+            </div>
+            <a href="{% url 'stores:product_detail' product.id %}" class="card-title" title="{{ product.name }}">{{ product.name }}</a>
+            <a href="{% url 'stores:store_detail' product.store.slug %}" class="store-link">
+                <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+                {{ product.store.name }}
+            </a>
+            <div class="card-header-info">
+                {% if product.average_rating %}
+                    <span class="rating-badge">
+                        <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <span class="persian-num">{{ product.average_rating }}</span>
+                    </span>
+                {% else %}
+                    <span style="font-size: 0.8rem; color: #888;">بدون امتیاز</span>
+                {% endif %}
+            </div>
+            <div class="price-section">
+                {% if product.discount_percent > 0 %}
+                    <div style="display: flex; flex-direction: column;">
+                        <span class="price-discount persian-num format-price">{{ product.price }}</span>
+                        <span class="price-final"><span class="persian-num format-price">{{ product.final_price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                    </div>
+                    <div class="discount-badge">
+                        <span class="persian-num">{{ product.discount_percent }}</span>٪
+                    </div>
+                {% else %}
+                    <span class="price-final" style="width: 100%; text-align: left;"><span class="persian-num format-price">{{ product.price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p style="color: #888; padding: 10px;">در حال حاضر محصولی در این دسته وجود ندارد.</p>
+    {% endfor %}
+</div>
+
+<h2 style="margin-top: 40px; margin-bottom: 20px;">خانه و آشپزخانه</h2>
+<div class="horizontal-scroll-wrapper">
+    {% for product in home_products|slice:":20" %}
+        <div class="card">
+            <div class="card-image-wrapper">
+                <a href="{% url 'stores:product_detail' product.id %}">
+                    {% if product.image %}<img src="{{ product.get_image_url }}" alt="{{ product.name }}">{% else %}<img src="{{ product.get_image_url }}" alt="{{ product.name }}">{% endif %}
+                </a>
+                {% if product.category %}
+                    <a href="{% url 'stores:category_products' product.category.slug %}" class="card-category-overlay">{{ product.category.name }}</a>
+                {% endif %}
+            </div>
+            <a href="{% url 'stores:product_detail' product.id %}" class="card-title" title="{{ product.name }}">{{ product.name }}</a>
+            <a href="{% url 'stores:store_detail' product.store.slug %}" class="store-link">
+                <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+                {{ product.store.name }}
+            </a>
+            <div class="card-header-info">
+                {% if product.average_rating %}
+                    <span class="rating-badge">
+                        <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <span class="persian-num">{{ product.average_rating }}</span>
+                    </span>
+                {% else %}
+                    <span style="font-size: 0.8rem; color: #888;">بدون امتیاز</span>
+                {% endif %}
+            </div>
+            <div class="price-section">
+                {% if product.discount_percent > 0 %}
+                    <div style="display: flex; flex-direction: column;">
+                        <span class="price-discount persian-num format-price">{{ product.price }}</span>
+                        <span class="price-final"><span class="persian-num format-price">{{ product.final_price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                    </div>
+                    <div class="discount-badge">
+                        <span class="persian-num">{{ product.discount_percent }}</span>٪
+                    </div>
+                {% else %}
+                    <span class="price-final" style="width: 100%; text-align: left;"><span class="persian-num format-price">{{ product.price }}</span> <small style="font-weight: normal; font-size: 0.8rem;">تومان</small></span>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p style="color: #888; padding: 10px;">در حال حاضر محصولی در این دسته وجود ندارد.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

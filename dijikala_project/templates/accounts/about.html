@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="glass-panel" style="max-width: 1000px; margin: 40px auto; padding: 40px; border-radius: 20px;">
+    <h1 style="text-align: center; color: var(--primary); margin-bottom: 20px;">درباره مینی‌کالا</h1>
+    <p style="text-align: justify; line-height: 1.8; font-size: 1.1rem; color: var(--text-color); margin-bottom: 40px;">
+        مینی‌کالا یک پلتفرم جامع و مدرن برای خرید و فروش آنلاین است. هدف ما ایجاد فضایی امن، سریع و کاربرپسند برای ارتباط مستقیم بین فروشندگان و خریداران می‌باشد. در مینی‌کالا تلاش می‌کنیم با بهره‌گیری از جدیدترین تکنولوژی‌های روز دنیا، تجربه‌ای متفاوت از تجارت الکترونیک را برای هم‌وطنان عزیزمان رقم بزنیم.
+    </p>
+
+    <h2 style="text-align: center; margin-bottom: 30px;">تیم توسعه‌دهنده</h2>
+    <div style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; margin-bottom: 50px;">
+        
+        <div class="card" style="width: 250px; text-align: center; padding: 20px; align-items: center;">
+            <img src="/media/images/dev1.png"  alt="توسعه دهنده 1" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 15px; border: 3px solid var(--primary); object-fit: cover;">
+            <h3 style="margin-bottom: 5px;">میلاد باصری</h3>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 15px;">Backend Developer</p>
+        </div>
+
+        <div class="card" style="width: 250px; text-align: center; padding: 20px; align-items: center;">
+            <img src="/media/images/dev2.png"  alt="توسعه دهنده 2" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 15px; border: 3px solid var(--primary); object-fit: cover;">
+            <h3 style="margin-bottom: 5px;">هوش مصنوعی</h3>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 15px;">Frontend Developer</p>
+        </div>
+
+    </div>
+
+    <h2 style="text-align: center; margin-bottom: 20px;">ارتباط با ما</h2>
+    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <a href="https://t.me/miladbasery" target="_blank" class="btn-glass" style="color: #0088cc; border-color: #0088cc;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.26-3.83 2.5-.27.18-.51.27-.73.26-.24-.01-.7-.14-1.04-.25-.42-.14-.75-.22-.72-.47.02-.13.2-.27.56-.42 2.19-.95 3.65-1.55 4.38-1.85 2.08-.86 2.51-1.01 2.8-1.01.06 0 .2.01.29.08.07.06.1.13.1.2z"/></svg>
+            تلگرام
+        </a>
+        <a href="https://www.linkedin.com/in/miladbasery" target="_blank" class="btn-glass" style="color: #0077b5; border-color: #0077b5;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.19-3.54c-1.6 0-2.33.88-2.73 1.51v-1.3h-3.04c.04.86 0 8.63 0 8.63h3.04v-4.81c0-.26.02-.52.1-.71.21-.52.7-1.06 1.5-1.06 1.06 0 1.48.81 1.48 2v4.58h3.04M5.66 9.42h3.04v8.63H5.66v-8.63M7.18 4.79a1.76 1.76 0 0 0-1.9 1.75 1.76 1.76 0 0 0 1.86 1.75h.02c1.07 0 1.9-.78 1.9-1.75a1.76 1.76 0 0 0-1.88-1.75z"/></svg>
+            لینکدین
+        </a>
+        <a href="https://miladbasery.ir" target="_blank" class="btn-glass" style="color: var(--primary); border-color: var(--primary);">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            وب‌سایت مینی‌کالا
+        </a>
+    </div>
+</div>
+{% endblock %}

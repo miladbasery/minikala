@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>۵۰۰ | خطای سرور</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg-color);">
+    <div class="glass-panel" style="width: 90%; max-width: 500px; padding: 40px; text-align: center; border-top: 4px solid var(--danger);">
+        <h1 style="font-size: 5rem; color: var(--text-color); margin-bottom: 10px;">۵۰۰</h1>
+        <h2 style="margin-bottom: 20px;">خطای داخلی سرور!</h2>
+        <p style="color: #888; margin-bottom: 30px;">مشکلی در سرور رخ داده است. تیم فنی در حال بررسی است.</p>
+        <a href="{% url 'stores:home' %}" class="btn-glass btn-danger" style="width: 100%;">بازگشت به فروشگاه</a>
+    </div>
+</body>
+</html>

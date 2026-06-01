@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="glass-panel center-card">
+    <div style="font-size: 4rem; margin-bottom: 20px; color: var(--danger);">
+        <svg viewBox="0 0 24 24" width="80" height="80" fill="currentColor">
+            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+        </svg>
+    </div>
+
+    <h2 style="color: var(--danger); margin-bottom: 15px;">
+        {{ title|default:"تأیید حذف" }}
+    </h2>
+
+    <p style="color: #bbb; line-height: 1.6; margin-bottom: 30px;">
+        {{ message|default:"آیا از حذف این مورد اطمینان دارید؟ این عملیات قابل بازگشت نیست."|linebreaksbr }}
+    </p>
+
+    <form method="post" style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+        {% csrf_token %}
+        <button type="submit" class="btn-glass btn-danger" style="padding:10px 25px; font-weight:bold;">
+            {{ confirm_text|default:"بله، حذف کن" }}
+        </button>
+
+        <a href="{{ cancel_url|default:'/' }}" class="btn-glass" style="padding:10px 25px;">
+            {{ cancel_text|default:"انصراف" }}
+        </a>
+    </form>
+</div>
+{% endblock %}

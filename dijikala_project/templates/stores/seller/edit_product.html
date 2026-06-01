@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="glass-panel" style="padding: 30px; max-width: 600px; margin: 0 auto;">
+    <h2 style="margin-bottom: 20px;">ویرایش محصول: <span style="color: var(--primary);">{{ product.name }}</span></h2>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="margin-bottom: 20px; line-height: 2;">
+            {{ form.as_p }}
+        </div>
+        
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button type="submit" class="btn-glass btn-primary" style="flex: 1;">بروزرسانی محصول</button>
+            <a href="{% url 'stores:manage_products' product.store.id %}" class="btn-glass" style="flex: 1; text-align: center;">انصراف و بازگشت</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const formInputs = document.querySelectorAll('form input[type="text"], form input[type="number"], form input[type="file"], form textarea, form select');
+        formInputs.forEach(input => {
+            input.classList.add('custom-input');
+        });
+    });
+</script>
+{% endblock %}

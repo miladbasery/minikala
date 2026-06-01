@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>۴۰۴ | صفحه یافت نشد</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg-color);">
+    <div class="glass-panel" style="width: 90%; max-width: 500px; padding: 40px; text-align: center; border-top: 4px solid var(--primary);">
+        <h1 style="font-size: 5rem; color: var(--text-color); margin-bottom: 10px;">۴۰۴</h1>
+        <h2 style="margin-bottom: 20px;">صفحه مورد نظر یافت نشد!</h2>
+        <p style="color: #888; margin-bottom: 30px;">متاسفانه صفحه‌ای که به دنبال آن هستید وجود ندارد.</p>
+        <a href="{% url 'stores:home' %}" class="btn-glass btn-primary" style="width: 100%;">بازگشت به فروشگاه</a>
+    </div>
+</body>
+</html>

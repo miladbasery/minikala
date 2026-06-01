@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به حساب - دیجی‌کالا</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script>
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+    </script>
+    <style>
+        .auth-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .auth-box { width: 100%; max-width: 400px; padding: 40px 30px; position: relative; }
+        .back-btn { position: absolute; top: 15px; left: 15px; color: var(--text-color); text-decoration: none; }
+        .form-input { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid var(--glass-border); background: var(--input-bg); color: var(--text-color); margin-bottom: 15px; outline: none; transition: 0.3s; }
+        .form-input:focus { border-color: var(--primary); }
+        .form-input.ltr { direction: ltr; text-align: left; font-family: sans-serif; }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box glass-panel">
+            <a href="{% url 'stores:home' %}" class="back-btn" title="بازگشت به خانه">
+                 <svg class="icon" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            </a>
+            <h2 style="margin-bottom: 30px; text-align: center; color: var(--primary);">ورود به حساب</h2>
+
+            {% if form.non_field_errors %}
+                <div style="background: rgba(255,87,34,0.1); border: 1px solid var(--danger); color: var(--danger); padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-size: 0.9rem;">
+                    شماره تماس یا رمز عبور اشتباه است.
+                </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'accounts:login' %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.GET.next|default:'' }}">
+                
+                <label style="display: block; margin-bottom: 8px; font-size: 0.9rem;">شماره تماس</label>
+                <input type="text" name="username" class="form-input ltr" required placeholder="09xxxxxxxxx">
+                
+                <label style="display: block; margin-bottom: 8px; font-size: 0.9rem;">رمز عبور</label>
+                <input type="password" name="password" class="form-input ltr" required placeholder="********">
+                
+                <button type="submit" class="btn-glass btn-primary" style="width: 100%; padding: 12px; font-size: 1.1rem; margin-top: 10px;">ورود</button>
+            </form>
+            
+            <div style="margin-top: 25px; display: flex; flex-direction: column; gap: 10px;">
+                <a href="{% url 'accounts:signup_customer' %}" class="btn-glass">ثبت‌نام خریدار جدید</a>
+                <a href="{% url 'accounts:signup_seller' %}" class="btn-glass" style="border-color: var(--primary); color: var(--primary);">فروشنده شوید!</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

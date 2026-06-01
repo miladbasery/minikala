@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 style="margin-bottom: 20px;">سبد خرید شما</h2>
+
+{% if items %}
+<div class="glass-panel cart-table-wrapper" style="padding: 20px;">
+    <table class="cart-table" id="cart-table">
+        <thead>
+            <tr>
+                <th>محصول</th>
+                <th>قیمت واحد</th>
+                <th>تعداد</th>
+                <th>مجموع</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody id="cart-body">
+            {% for item in items %}
+            <tr id="row-{{ item.id }}">
+                <td data-label="محصول:">
+                    <a href="{% url 'stores:product_detail' item.product.id %}" class="cart-product-link">
+                        {{ item.product.name }}
+                    </a>
+                </td>
+                <td data-label="قیمت واحد:" class="price format-price" data-price="{{ item.product.price }}">{{ item.product.price }}</td>
+                <td data-label="تعداد:">
+                    <div class="qty-controls">
+                        <button type="button" onclick="removeFromCart({{ item.id }})" class="qty-btn">−</button>
+                        <span id="qty-{{ item.id }}" class="qty-val persian-num">{{ item.quantity }}</span>
+                        <button type="button" onclick="addToCart({{ item.product.id }}, {{ item.id }})" class="qty-btn">+</button>
+                    </div>
+                </td>
+                <td data-label="مجموع:" id="subtotal-{{ item.id }}" class="format-price">{% widthratio item.product.price 1 item.quantity %}</td>
+                <td data-label="عملیات:">
+                    <button type="button" onclick="deleteItem({{ item.id }})" class="btn-glass btn-danger" style="padding:5px 10px;">
+                        <svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                        حذف
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="glass-panel" style="margin-top: 20px; padding: 30px; text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">
+    <h3 style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 15px;">
+        <span>مبلغ کل قابل پرداخت:</span>
+        <span style="color: var(--primary);"><span id="total-price" class="format-price">{{ total }}</span></span>
+    </h3>
+
+    <p style="margin: 15px 0; font-size: 1.1rem; display: flex; justify-content: space-between;">
+        <span>موجودی فعلی شما:</span>
+        <span class="format-price persian-num">{{ user.balance }}</span>
+    </p>
+
+    <button type="button"
+        onclick="openCheckoutModal()"
+        class="btn-glass btn-primary"
+        style="font-size: 1.2rem; padding: 12px 30px; width: 100%; border-radius: 15px; margin-top: 10px;"
+        {% if user.balance < total %}disabled{% endif %}>
+        تایید و پرداخت نهایی
+    </button>
+
+    {% if user.balance < total %}
+    <div style="background: rgba(255, 87, 34, 0.1); border: 1px solid var(--danger); padding: 15px; border-radius: 12px; margin-top: 20px; color: #ffab91;">
+        موجودی حساب شما کافی نیست.
+        لطفا از بخش
+        <a href="{% url 'accounts:profile' %}" style="color:white; font-weight: bold; text-decoration:underline;">پروفایل</a>
+        حساب خود را شارژ کنید.
+    </div>
+    {% endif %}
+</div>
+
+<div id="checkoutModal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeCheckoutModal()"><svg class="icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+        <h3 style="margin-bottom: 20px; text-align: center; color: var(--primary);">تایید فاکتور نهایی</h3>
+        
+        <div style="background: var(--input-bg); border-radius: 12px; padding: 15px; margin-bottom: 20px;">
+            {% for item in items %}
+            <div class="invoice-item">
+                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60%;">{{ item.product.name }}</span>
+                <span class="persian-num">{{ item.quantity }} × <span class="format-price">{{ item.product.price }}</span></span>
+            </div>
+            {% endfor %}
+            <div class="invoice-total">
+                <span>جمع کل:</span>
+                <span id="modal-total-price" class="format-price">{{ total }}</span>
+            </div>
+        </div>
+        
+        <form action="{% url 'stores:checkout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-glass btn-primary" style="width: 100%; font-size: 1.1rem; padding: 12px;">پرداخت و ثبت سفارش</button>
+        </form>
+    </div>
+</div>
+
+{% else %}
+<div class="glass-panel" style="padding: 50px 30px; text-align: center;">
+    <svg style="width: 80px; height: 80px; fill: var(--glass-border); margin-bottom: 20px;" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    <h3 style="margin-bottom: 15px;">سبد خرید شما خالی است.</h3>
+    <a href="{% url 'stores:home' %}" class="btn-glass btn-primary" style="padding: 10px 25px;">بازگشت به فروشگاه</a>
+</div>
+{% endif %}
+
+<script>
+function formatNumbers() {
+    document.querySelectorAll('.format-price').forEach(el => {
+        let text = el.innerText.replace(/[^\d]/g, '');
+        if(text) {
+            el.innerText = Number(text).toLocaleString('fa-IR') + ' تومان';
+            el.dataset.rawPrice = text;
+        }
+    });
+}
+document.addEventListener('DOMContentLoaded', formatNumbers);
+
+function formatSingle(num) {
+    return Number(num).toLocaleString('fa-IR') + ' تومان';
+}
+
+function addToCart(productId, itemId) {
+    fetch(`/cart/add/${productId}/`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(`qty-${itemId}`).innerText = data.quantity;
+            const row = document.getElementById(`row-${itemId}`);
+            const price = parseInt(row.querySelector('.price').dataset.rawPrice || row.querySelector('.price').dataset.price);
+            let sub = price * data.quantity;
+            let subEl = document.getElementById(`subtotal-${itemId}`);
+            subEl.innerText = formatSingle(sub);
+            subEl.dataset.rawPrice = sub;
+            
+            updateTotal();
+            const badge = document.getElementById('headerCartBadge');
+            if (badge) badge.innerText = data.total_items;
+        }
+    });
+}
+
+function removeFromCart(itemId) {
+    fetch(`/cart/remove/${itemId}/`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            if (data.quantity > 0) {
+                document.getElementById(`qty-${itemId}`).innerText = data.quantity;
+                const row = document.getElementById(`row-${itemId}`);
+                const price = parseInt(row.querySelector('.price').dataset.rawPrice || row.querySelector('.price').dataset.price);
+                let sub = price * data.quantity;
+                let subEl = document.getElementById(`subtotal-${itemId}`);
+                subEl.innerText = formatSingle(sub);
+                subEl.dataset.rawPrice = sub;
+            } else {
+                const row = document.getElementById(`row-${itemId}`);
+                if (row) row.remove();
+            }
+
+            updateTotal();
+            const badge = document.getElementById('headerCartBadge');
+            if (badge) badge.innerText = data.total_items;
+
+            if (document.querySelectorAll('#cart-body tr').length === 0) {
+                location.reload();
+            }
+        }
+    });
+}
+
+function deleteItem(itemId) {
+    fetch(`/cart/remove/${itemId}/`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'delete_all=1'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const row = document.getElementById(`row-${itemId}`);
+            if (row) row.remove();
+            
+            updateTotal();
+            const badge = document.getElementById('headerCartBadge');
+            if (badge) badge.innerText = data.total_items;
+
+            if (document.querySelectorAll('#cart-body tr').length === 0) {
+                location.reload();
+            }
+        }
+    });
+}
+
+function updateTotal() {
+    let total = 0;
+    document.querySelectorAll('[id^="subtotal-"]').forEach(el => {
+        total += parseInt(el.dataset.rawPrice || el.innerText.replace(/[^\d]/g, ''));
+    });
+    document.getElementById('total-price').innerText = formatSingle(total);
+    document.getElementById('modal-total-price').innerText = formatSingle(total);
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Modal functions
+function openCheckoutModal() {
+    document.getElementById('checkoutModal').classList.add('active');
+}
+function closeCheckoutModal() {
+    document.getElementById('checkoutModal').classList.remove('active');
+}
+</script>
+{% endblock %}

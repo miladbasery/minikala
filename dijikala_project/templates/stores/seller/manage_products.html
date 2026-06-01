@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+    <h2>مدیریت محصولات: <span style="color: var(--primary);">{{ store.name }}</span></h2>
+    <a href="{% url 'stores:manage_stores' %}" class="btn-glass">بازگشت به لیست فروشگاه‌ها</a>
+</div>
+
+<!-- بخش افزودن محصول جدید -->
+<div class="glass-panel" style="padding: 25px; margin-bottom: 40px;">
+    <h3 style="margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">افزودن محصول جدید</h3>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="margin-bottom: 20px; line-height: 2;">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn-glass btn-primary" style="width: 150px;">ثبت محصول</button>
+    </form>
+</div>
+
+<!-- بخش لیست محصولات فعلی -->
+<h3 style="margin-bottom: 20px;">محصولات فعلی فروشگاه</h3>
+<div class="glass-panel cart-table-wrapper" style="padding: 10px 20px;">
+    <table class="cart-table" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>نام محصول</th>
+                <th>قیمت</th>
+                <th>موجودی</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td data-label="نام محصول">{{ product.name }}</td>
+                    <td data-label="قیمت" class="persian-num">{{ product.price }} تومان</td>
+                    <td data-label="موجودی" class="persian-num">{{ product.stock }} عدد</td>
+                    <td data-label="عملیات">
+                        <div style="display: flex; gap: 5px; justify-content: flex-end;">
+                            <a href="{% url 'stores:edit_product' product.id %}" class="btn-glass" style="font-size: 0.85rem; padding: 6px 12px;">ویرایش</a>
+                            <a href="{% url 'stores:delete_product' product.id %}" class="btn-glass btn-danger" style="font-size: 0.85rem; padding: 6px 12px;">حذف</a>
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align: center; color: #888; padding: 30px;">هیچ محصولی در این فروشگاه یافت نشد.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const formInputs = document.querySelectorAll('form input[type="text"], form input[type="number"], form input[type="file"], form textarea, form select');
+        formInputs.forEach(input => {
+            input.classList.add('custom-input');
+        });
+    });
+</script>
+{% endblock %}

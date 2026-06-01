@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="glass-panel invoice-wrapper">
+    <div class="invoice-header">
+        <div class="invoice-company">
+            <h2>مینی کالا</h2>
+            <p style="font-size: 0.9rem; color: #888;">رسید پرداخت الکترونیکی</p>
+        </div>
+        <div class="invoice-details" style="text-align: left;">
+            <p><strong>کد رهگیری:</strong> <span class="persian-num" style="color: var(--primary);">#{{ order.id }}</span></p>
+            <p><strong>تاریخ:</strong> <span class="persian-num">{{ order.date|date:"Y/m/d" }}</span></p>
+            <p><strong>شماره مشتری:</strong> <span class="persian-num">{{ order.customer.phone_number }}</span></p>
+        </div>
+    </div>
+
+    <div class="invoice-table-container">
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>ردیف</th>
+                    <th>نام محصول</th>
+                    <th style="text-align: center;">تعداد</th>
+                    <th>فی (تومان)</th>
+                    <th>قیمت کل (تومان)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.items.all %}
+                    <tr>
+                        <td class="persian-num">{{ forloop.counter }}</td>
+                        <td>{{ item.product.name }}</td>
+                        <td style="text-align: center;" class="persian-num">{{ item.quantity }}</td>
+                        <td class="persian-num">{{ item.price }}</td>
+                        <td class="persian-num">{% widthratio item.price 1 item.quantity %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="invoice-summary">
+        <div class="summary-row">
+            <span>جمع کل:</span>
+            <span class="persian-num">{{ order.total_amount }} تومان</span>
+        </div>
+        <div class="summary-row text-success">
+            <span>تخفیف اعمال شده:</span>
+            <span class="persian-num">۰ تومان</span> 
+        </div>
+        <div class="summary-total">
+            <span>مبلغ پرداختی:</span>
+            <span class="persian-num">{{ order.total_amount }} تومان</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 30px; text-align: center;">
+        <a href="{% url 'stores:home' %}" class="btn-glass btn-primary">بازگشت به فروشگاه</a>
+        <button onclick="window.print()" class="btn-glass">چاپ فاکتور</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="purchaseSuccessModal">
+    <div class="modal-content" style="text-align: center; border: 2px solid #00e676;">
+        <span class="success-icon-large">🎉</span>
+        <h2 style="margin-bottom: 10px; color: var(--text-color);">خرید شما با موفقیت انجام شد!</h2>
+        <p style="color: #888; margin-bottom: 20px; line-height: 1.6;">از اینکه مینی کالا را برای خرید انتخاب کردید سپاسگزاریم.<br>سفارش شما با کد رهگیری <b class="persian-num" style="color: var(--primary);">#{{ order.id }}</b> ثبت شد.</p>
+        <button type="button" class="btn-glass btn-primary" onclick="document.getElementById('purchaseSuccessModal').classList.remove('active')">مشاهده فاکتور</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        document.querySelectorAll('.persian-num').forEach(el => {
+            el.innerText = el.innerText.replace(/\d/g, x => farsiDigits[x]);
+        });
+
+        if (document.referrer.includes('cart') || document.referrer.includes('checkout')) {
+            if (!sessionStorage.getItem('notified_order_{{ order.id }}')) {
+                document.getElementById('purchaseSuccessModal').classList.add('active');
+                sessionStorage.setItem('notified_order_{{ order.id }}', 'true');
+            }
+        }
+    });
+</script>
+{% endblock %}

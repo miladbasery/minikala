@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex-between" style="margin-bottom: 20px;">
+    <h2>پروفایل کاربری من</h2>
+    <form method="post" action="{% url 'accounts:logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn-glass btn-danger">خروج از حساب</button>
+    </form>
+</div>
+
+<div class="glass-panel" style="padding: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+    <div>
+        <p style="margin-bottom: 5px;"><strong>شماره تماس:</strong> <span class="persian-num">{{ user.phone_number }}</span></p>
+        <p><strong>موجودی کیف پول:</strong> <span class="persian-num currency-format text-success" id="user-balance">{{ user.balance }}</span> <small>تومان</small></p>
+    </div>
+</div>
+
+<div class="grid-cards">
+    <div class="card glass-panel">
+        <h3 style="margin-bottom: 15px;">ویرایش اطلاعات</h3>
+        <form method="post" enctype="multipart/form-data" class="glass-panel" style="padding: 20px;">
+            {% csrf_token %}
+            {{ p_form.as_p }}
+            <button type="submit" class="btn-glass">ذخیره تغییرات</button>
+        </form>
+
+    </div>
+
+    <div class="card glass-panel">
+        <h3 style="margin-bottom: 15px;">شارژ حساب</h3>
+        <form method="post" id="charge-form">
+            {% csrf_token %}
+            {{ b_form.as_p }}
+            <button type="button" onclick="showChargeModal()" class="btn-glass btn-primary" style="width: 100%; margin-top: 10px;">افزایش موجودی</button>
+            <button type="submit" name="add_balance" id="real-charge-btn" style="display: none;"></button>
+        </form>
+    </div>
+</div>
+
+<h3 style="margin-top: 40px; margin-bottom: 20px;">سفارشات اخیر</h3>
+{% if orders %}
+    <div class="glass-panel" style="overflow-x: auto;">
+        <table class="cart-table" style="min-width: 600px;">
+            <thead>
+                <tr>
+                    <th>کد سفارش</th>
+                    <th>مبلغ کل (تومان)</th>
+                    <th>تاریخ ثبت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td class="persian-num" style="font-weight: bold; color: var(--primary);">#{{ order.id }}</td>
+                    <td class="persian-num currency-format">{{ order.total_amount }}</td>
+                    <td class="persian-num">{{ order.date|date:"Y/m/d" }}</td>
+                    <td><a href="{% url 'stores:invoice' order.id %}" class="btn-glass">مشاهده فاکتور</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="glass-panel" style="padding: 30px; text-align: center; color: #888;">
+        شما هنوز سفارشی ثبت نکرده‌اید.
+    </div>
+{% endif %}
+
+<div style="margin-top: 40px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
+    <a href="{% url 'accounts:delete_account' %}" class="btn-glass" style="color: var(--danger); border-color: var(--danger);">حذف دائمی حساب کاربری</a>
+</div>
+
+<div class="modal-overlay" id="chargeModal">
+    <div class="modal-content" style="text-align: center;">
+        <h3 style="margin-bottom: 15px;">تایید افزایش موجودی</h3>
+        <p style="margin-bottom: 20px; color: #888;">آیا از شارژ حساب کاربری خود اطمینان دارید؟</p>
+        <div class="action-buttons" style="justify-content: center;">
+            <button type="button" class="btn-glass btn-primary" onclick="submitCharge()">بله، واریز کن</button>
+            <button type="button" class="btn-glass" onclick="document.getElementById('chargeModal').classList.remove('active')">انصراف</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="chargeSuccessModal">
+    <div class="modal-content" style="text-align: center;">
+        <span class="success-icon-large">
+            <svg viewBox="0 0 24 24" width="64" height="64" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </span>
+        <h3 style="margin-bottom: 10px;">عملیات موفق</h3>
+        <p style="color: #888; margin-bottom: 20px;">کیف پول شما با موفقیت شارژ شد.</p>
+        <button type="button" class="btn-glass btn-primary" onclick="closeSuccessAndSubmit()">متوجه شدم</button>
+    </div>
+</div>
+
+<script>
+    function showChargeModal() { document.getElementById('chargeModal').classList.add('active'); }
+    function submitCharge() {
+        document.getElementById('chargeModal').classList.remove('active');
+        document.getElementById('chargeSuccessModal').classList.add('active');
+    }
+    function closeSuccessAndSubmit() { document.getElementById('real-charge-btn').click(); }
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        document.querySelectorAll('.currency-format').forEach(el => {
+            let num = el.innerText.replace(/\D/g, '');
+            if(num) el.innerText = Number(num).toLocaleString('en-US');
+        });
+        document.querySelectorAll('.persian-num').forEach(el => {
+            el.innerText = el.innerText.replace(/\d/g, x => farsiDigits[x]);
+        });
+    });
+</script>
+{% endblock %}

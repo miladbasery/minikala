@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 style="margin-bottom: 20px;">لیست فروشگاه‌ها</h2>
+
+<div class="grid-cards">
+    {% for store in stores %}
+        <div class="card glass-panel" style="display: flex; flex-direction: column; justify-content: center; text-align: center;">
+            
+            <a href="{% url 'stores:store_detail' store.slug %}" class="card-image-wrapper" style="margin-bottom: 15px; display: block; height: 150px; overflow: hidden;">
+                <img src="{{ store.get_image_url }}" alt="{{ store.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+            </a>
+
+            <h3 class="card-title" style="font-size: 1.2rem; margin-bottom: 10px;">
+                <a href="{% url 'stores:store_detail' store.slug %}" style="color: inherit; text-decoration: none;">{{ store.name }}</a>
+            </h3>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">{{ store.description|truncatewords:20 }}</p>
+            
+            <a href="{% url 'stores:store_detail' store.slug %}" class="btn-glass" style="width: 100%; margin-top: auto;">مشاهده فروشگاه</a>
+        </div>
+    {% empty %}
+        <div class="glass-panel" style="grid-column: 1 / -1; padding: 40px; text-align: center;">
+            <p style="color: #888; font-size: 1.1rem;">فروشگاهی یافت نشد.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

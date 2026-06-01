@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+    <h2>مدیریت فروشگاه‌های من</h2>
+    <a href="{% url 'stores:create_store' %}" class="btn-glass btn-primary">+ ایجاد فروشگاه جدید</a>
+</div>
+
+<div class="grid-cards">
+    {% for store in stores %}
+        <div class="card glass-panel" style="display: flex; flex-direction: column; justify-content: flex-start; gap: 15px;">
+            <h3 style="color: var(--primary); font-size: 1.2rem;">{{ store.name }}</h3>
+            
+            <p style="font-size: 0.95rem;">موجودی قابل برداشت: <span class="persian-num" style="color: #00e676; font-weight: bold; font-size: 1.1rem;">{{ store.balance }}</span> تومان</p>
+            
+            <form action="{% url 'stores:withdraw_store_balance' store.id %}" method="post" style="display: flex; gap: 10px; align-items: stretch; margin-bottom: 10px;">
+                {% csrf_token %}
+                <input type="number" name="amount" class="custom-input" placeholder="مبلغ برداشت..." min="1" max="{{ store.balance }}" required style="margin-bottom: 0; flex: 1;">
+                <button type="submit" class="btn-glass btn-primary" style="white-space: nowrap;">برداشت</button>
+            </form>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: auto;">
+                <a href="{% url 'stores:manage_products' store.id %}" class="btn-glass" style="width: 100%;">مدیریت محصولات</a>
+                <div style="display: flex; gap: 10px;">
+                    <a href="{% url 'stores:edit_store' store.id %}" class="btn-glass" style="flex: 1;">ویرایش اطلاعات</a>
+                    <a href="{% url 'stores:delete_store' store.id %}" class="btn-glass btn-danger" style="flex: 1;">حذف فروشگاه</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="glass-panel" style="grid-column: 1 / -1; padding: 40px; text-align: center;">
+            <p style="color: #888; font-size: 1.1rem;">شما هنوز هیچ فروشگاهی ایجاد نکرده‌اید.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

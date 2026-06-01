@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="glass-panel" style="padding: 25px; margin-bottom: 30px;">
+    <h2 style="color: var(--primary); margin-bottom: 10px;">فروشگاه: {{ store.name }}</h2>
+    <p style="line-height: 1.6; color: var(--text-color);">{{ store.description }}</p>
+</div>
+
+<h3 style="margin-bottom: 20px;">محصولات فروشگاه</h3>
+
+<div class="grid-cards">
+    {% for product in products %}
+        <div class="card glass-panel">
+            <a href="{% url 'stores:product_detail' product.id %}" class="card-image-wrapper">
+                {# مثل search.html: بدون if/else و استفاده مستقیم از get_image_url برای نمایش دیفالت #}
+                <img src="{{ product.get_image_url }}" alt="{{ product.name }}">
+            </a>
+            
+            <a href="{% url 'stores:product_detail' product.id %}" class="card-title">{{ product.name }}</a>
+            
+            <div class="price-section" style="margin-top: 10px; margin-bottom: 15px;">
+                <span class="price-final persian-num">{{ product.price }} تومان</span>
+                <span style="font-size: 0.8rem; color: #888;">موجودی: <span class="persian-num">{{ product.stock }}</span></span>
+            </div>
+
+            {% if user.is_authenticated %}
+                <form action="{% url 'stores:add_to_cart' product.id %}" method="post" style="margin-top: auto;">
+                    {% csrf_token %}
+                    <a href="{% url 'stores:product_detail' product.id %}" 
+                    class="btn-glass btn-primary" 
+                    style="display: block; width: 100%; text-align: center; text-decoration: none; margin-top: auto;">
+                    مشاهده محصول
+                    </a>
+
+                </form>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="btn-glass" style="width: 100%; margin-top: auto;">برای خرید وارد شوید</a>
+            {% endif %}
+        </div>
+    {% empty %}
+        <div class="glass-panel" style="grid-column: 1 / -1; padding: 40px; text-align: center;">
+            <p style="color: #888; font-size: 1.1rem;">این فروشگاه هنوز محصولی ثبت نکرده است.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
